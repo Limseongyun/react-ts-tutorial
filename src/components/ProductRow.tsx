@@ -1,12 +1,16 @@
-import React from 'react';
+import React from "react";
 
-function ProductRow() {
-    return (
-        <tr>
-            <td>Football</td>
-            <td>$49.99</td>
-        </tr>
-    );
+interface Props {
+    name: string;
+    price: string;
+    stocked: boolean;
 }
 
-export default ProductRow;
+export const ProductRow: React.FC<Props> = (props) => {
+    return (
+        <tr>
+            <td>{props.name}</td>
+            <td>{props.price}</td>
+        </tr>
+    )
+}

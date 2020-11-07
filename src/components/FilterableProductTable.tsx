@@ -1,13 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SearchBar from "./SearchBar ";
 import ProductTable from "./ProductTable";
+import {Product} from "../dto/Product";
+
+const products: Array<Product> = [
+    {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
+    {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
+    {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
+    {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
+    {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
+    {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"},
+];
 
 function FilterableProductTable() {
+
+    const [keyword, setKeyword] = useState('');
+    const [stockChecked, setStockChecked] = useState(false);
     return (
         //div는 design요소에 영향을 미칠수 있으니
         <>
-            <SearchBar></SearchBar>
-            <ProductTable></ProductTable>
+            <SearchBar keyword={keyword} setKeyword={setKeyword} stockChecked={stockChecked} setStockChecked={setStockChecked} ></SearchBar>
+            <ProductTable products={products.filter((item: Product) => item.name.indexOf(keyword) >= 0).filter((item: Product) => stockChecked ? item.stocked : true)}></ProductTable>
         </>
     );
 }

@@ -1,8 +1,25 @@
 import React from 'react';
 import ProductCategoryRow from "./ProductCategoryRow";
-import ProductRow from "./ProductRow";
+import {ProductRow} from "./ProductRow";
+import {Product} from "../dto/Product";
+import _ from "lodash";
 
-function ProductTable() {
+interface Props {
+    products : Array<Product>
+}
+
+const ProductTable: React.FC<Props> = (props) => {
+    const category = _.groupBy(props.products, 'category');
+    console.log(category);
+    const categoryList = [];
+
+    for(let key in category){
+        categoryList.push(<ProductCategoryRow category={key} key={key}></ProductCategoryRow>);
+        category[key].forEach((item: Product)=>{
+            categoryList.push(<ProductRow key={item.name} price={item.price} name={item.name} stocked={item.stocked} ></ProductRow>)
+        });
+    }
+
     return (
         <>
             <table>
@@ -13,14 +30,9 @@ function ProductTable() {
                 </tr>
                 </thead>
                 <tbody>
-                <ProductCategoryRow></ProductCategoryRow>
-                <ProductRow></ProductRow>
-                <ProductRow></ProductRow>
-                <ProductRow></ProductRow>
-                <ProductCategoryRow></ProductCategoryRow>
-                <ProductRow></ProductRow>
-                <ProductRow></ProductRow>
-                <ProductRow></ProductRow>
+                {
+                    categoryList
+                }
                 </tbody>
             </table>
         </>

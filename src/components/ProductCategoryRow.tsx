@@ -1,6 +1,9 @@
 import React from 'react';
+interface  Props{
+    category: string
+}
 
-function ProductCategoryRow() {
+const ProductCategoryRow: React.FC<Props> = (props) => {
     return (
         <tr>
             <th colSpan={2}>Sporting Goods</th>
